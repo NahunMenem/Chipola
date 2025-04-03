@@ -140,7 +140,7 @@
 <div class="bg-white dark:bg-gray-800 p-6 rounded-lg w-full max-w-lg relative">
 <button class="absolute top-2 right-2 text-white bg-red-600 hover:bg-red-700 rounded-full px-3 py-1 font-bold" onclick="cerrarModalProducto()">✖</button>
 <h2 class="text-xl font-bold mb-4 text-center">➕ Nuevo Producto</h2>
-<form action="/guardar_producto" class="space-y-4" enctype="multipart/form-data" method="POST">
+<form action="/cargar_producto" method="POST" enctype="multipart/form-data">
 <input class="w-full p-2 rounded bg-gray-200 dark:bg-gray-700 text-black dark:text-white" name="descripcion" placeholder="Descripción" required="" type="text"/>
 <input class="w-full p-2 rounded bg-gray-200 dark:bg-gray-700 text-black dark:text-white" name="memoria" placeholder="Memoria (opcional)" type="text"/>
 <input class="w-full p-2 rounded bg-gray-200 dark:bg-gray-700 text-black dark:text-white" name="condicion_bateria" placeholder="Condición de batería (opcional)" type="text"/>
