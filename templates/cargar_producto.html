@@ -8,22 +8,24 @@
 <body class="bg-gray-900 text-gray-200 min-h-screen">
 
   <!-- Menú superior -->
-  <nav class="bg-gray-800 shadow-md p-4 flex justify-between items-center">
-    <h1 class="text-xl font-bold">📦 Gestión de Productos</h1>
-    {% if admin %}
-      <button onclick="abrirModalProducto()" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-        ➕ Nuevo Producto
-      </button>
-      <a href="/logout" class="ml-4 text-sm underline text-gray-400 hover:text-white">Cerrar sesión</a>
-    {% else %}
-      <a href="/login" class="text-sm underline text-gray-400 hover:text-white">Admin</a>
-    {% endif %}
+  <nav class="bg-gray-800 shadow-md p-4 flex justify-between items-center flex-wrap">
+    <h1 class="text-xl font-bold mb-2 sm:mb-0">📦 Gestión de Productos</h1>
+    <div class="flex items-center space-x-4">
+      {% if admin %}
+        <button onclick="abrirModalProducto()" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+          ➕ Nuevo Producto
+        </button>
+        <a href="/logout" class="text-sm underline text-gray-400 hover:text-white">Cerrar sesión</a>
+      {% else %}
+        <a href="/login" class="text-sm underline text-gray-400 hover:text-white">Admin</a>
+      {% endif %}
+    </div>
   </nav>
 
-  <div class="container mx-auto px-4 py-8 max-w-4xl">
+  <div class="container mx-auto px-4 py-8 max-w-5xl">
 
     <!-- Buscador -->
-    <form method="GET" action="/cargar_producto" class="mb-6 flex space-x-2">
+    <form method="GET" action="/cargar_producto" class="mb-6 flex flex-col sm:flex-row gap-3">
       <input
         type="text"
         name="buscar"
@@ -38,9 +40,9 @@
 
     <!-- Vista de productos -->
     <h2 class="text-2xl font-bold mb-4">Productos Cargados</h2>
-    <div class="grid grid-cols-1 gap-6 sm:gap-4 md:grid-cols-2 px-2">
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {% for producto in productos %}
-      <div class="bg-gray-800 rounded-xl shadow p-5 space-y-2 flex flex-col justify-between">
+      <div class="bg-gray-800 rounded-xl shadow p-5 space-y-3 flex flex-col justify-between">
         <div class="w-full h-40 sm:h-48 bg-gray-700 rounded-lg flex items-center justify-center overflow-hidden">
           <img src="{{ producto.foto }}" class="object-contain w-full h-full">
         </div>
@@ -49,7 +51,7 @@
           🖼️ Ampliar Foto
         </button>
 
-        <h3 class="font-bold text-xl">{{ producto.descripcion }}</h3>
+        <h3 class="font-bold text-lg sm:text-xl">{{ producto.descripcion }}</h3>
 
         {% if producto.memoria %}
           <p><span class="font-medium">Memoria:</span> {{ producto.memoria }}</p>
@@ -61,11 +63,11 @@
         <p><span class="font-medium">Estado:</span> {{ producto.estado }}</p>
         <p><span class="font-medium">Precio:</span> ${{ producto.precio }}</p>
 
-        {% if admin %}
-        <a href="/marcar_vendido/{{ producto.id }}" class="mt-2 inline-block bg-red-600 hover:bg-red-700 text-white py-2 px-3 rounded-lg text-sm">
+      {% if admin %}
+        <a href="/marcar_vendido/{{ producto.id }}" class="mt-2 inline-block bg-red-600 hover:bg-red-700 text-white py-2 px-3 rounded-lg text-sm text-center">
           🗑️ Eliminar Producto
         </a>
-        {% endif %}
+      {% endif %}
       </div>
       {% else %}
         <p class="text-gray-400">No hay productos cargados aún.</p>
