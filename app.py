@@ -136,7 +136,7 @@ def cargar_producto():
     return render_template('cargar_producto.html', productos=productos, filtro=filtro, admin=session.get('admin'))
 
 
-@app.route('/marcar_vendido/<int:id>')
+@app.route('/marcar_vendido/<int:id>', methods=['POST'])
 def marcar_vendido(id):
     if not session.get('admin'):
         return "Acceso denegado"
