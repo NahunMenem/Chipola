@@ -1,57 +1,64 @@
 <!DOCTYPE html>
-<html lang="es" class="dark">
+
+<html class="dark" lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Gestión de Productos</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gestión de Productos</title>
+<script src="https://cdn.tailwindcss.com">
+  function abrirModalProducto() {
+    document.getElementById("modal-producto").classList.remove("hidden");
+  }
+  function cerrarModalProducto() {
+    document.getElementById("modal-producto").classList.add("hidden");
+  }
+
+  // Mostrar alerta al enviar el formulario de producto
+  document.addEventListener("DOMContentLoaded", function() {
+    const form = document.querySelector("#modal-producto form");
+    if (form) {
+      form.addEventListener("submit", function () {
+        alert("✅ Producto guardado exitosamente");
+      });
+    }
+  });
+</script>
 </head>
 <body class="bg-gray-900 text-gray-200 min-h-screen">
-
-  <!-- Menú superior -->
-  <nav class="bg-gray-800 shadow-md p-4 flex justify-between items-center flex-wrap">
-    <h1 class="text-xl font-bold mb-2 sm:mb-0">📦 Gestión de Productos</h1>
-    <div class="flex items-center space-x-4">
+<!-- Menú superior -->
+<nav class="bg-gray-800 shadow-md p-4 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-0">
+<h1 class="text-xl font-bold">📦 Gestión de Productos</h1>
+<div class="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 w-full sm:w-auto">
       {% if admin %}
-        <button onclick="abrirModalProducto()" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+        <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full sm:w-auto" onclick="abrirModalProducto()">
           ➕ Nuevo Producto
         </button>
-        <a href="/logout" class="text-sm underline text-gray-400 hover:text-white">Cerrar sesión</a>
+<a class="text-sm underline text-gray-400 hover:text-white w-full sm:w-auto text-center" href="/logout">Cerrar sesión</a>
       {% else %}
-        <a href="/login" class="text-sm underline text-gray-400 hover:text-white">Admin</a>
+        <a class="text-sm underline text-gray-400 hover:text-white w-full sm:w-auto text-center" href="/login">Admin</a>
       {% endif %}
     </div>
-  </nav>
-
-  <div class="container mx-auto px-4 py-8 max-w-5xl">
-
-    <!-- Buscador -->
-    <form method="GET" action="/cargar_producto" class="mb-6 flex flex-col sm:flex-row gap-3">
-      <input
-        type="text"
-        name="buscar"
-        placeholder="🔍 Buscar producto por descripción..."
-        value="{{ filtro }}"
-        class="flex-1 p-3 bg-gray-800 text-white rounded-lg border border-gray-600"
-      />
-      <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-bold">
+</nav>
+<div class="container mx-auto px-4 py-8 max-w-5xl">
+<!-- Buscador -->
+<form action="/cargar_producto" class="mb-6 flex flex-col sm:flex-row gap-3" method="GET">
+<input class="flex-1 p-3 bg-gray-800 text-white rounded-lg border border-gray-600" name="buscar" placeholder="🔍 Buscar producto por descripción..." type="text" value="{{ filtro }}"/>
+<button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-bold" type="submit">
         Buscar
       </button>
-    </form>
-
-    <!-- Vista de productos -->
-    <h2 class="text-2xl font-bold mb-4">Productos Cargados</h2>
-    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+</form>
+<!-- Vista de productos -->
+<h2 class="text-2xl font-bold mb-4">Productos Cargados</h2>
+<div class="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       {% for producto in productos %}
       <div class="bg-gray-800 rounded-xl shadow p-5 space-y-3 flex flex-col justify-between">
-        <div class="w-full h-40 sm:h-48 bg-gray-700 rounded-lg flex items-center justify-center overflow-hidden">
-          <img src="{{ producto.foto }}" class="object-contain w-full h-full">
-        </div>
-
-        <button type="button" onclick="ampliarImagen('{{ producto.foto }}')" class="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-1 rounded w-fit">
+<div class="w-full h-40 sm:h-48 bg-gray-700 rounded-lg flex items-center justify-center overflow-hidden">
+<img class="object-contain w-full h-full" src="{{ producto.foto }}"/>
+</div>
+<button class="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-1 rounded w-fit" onclick="ampliarImagen('{{ producto.foto }}')" type="button">
           🖼️ Ampliar Foto
         </button>
-
-        <h3 class="font-bold text-lg sm:text-xl">{{ producto.descripcion }}</h3>
+<h3 class="font-bold text-lg sm:text-xl">{{ producto.descripcion }}</h3>
 
         {% if producto.memoria %}
           <p><span class="font-medium">Memoria:</span> {{ producto.memoria }}</p>
@@ -61,10 +68,10 @@
         {% endif %}
 
         <p><span class="font-medium">Estado:</span> {{ producto.estado }}</p>
-        <p><span class="font-medium">Precio:</span> ${{ producto.precio }}</p>
+<p><span class="font-medium">Precio:</span> ${{ producto.precio }}</p>
 
       {% if admin %}
-        <a href="/marcar_vendido/{{ producto.id }}" class="mt-2 inline-block bg-red-600 hover:bg-red-700 text-white py-2 px-3 rounded-lg text-sm text-center">
+        <a class="mt-2 inline-block bg-red-600 hover:bg-red-700 text-white py-2 px-3 rounded-lg text-sm text-center" href="/marcar_vendido/{{ producto.id }}">
           🗑️ Eliminar Producto
         </a>
       {% endif %}
@@ -73,20 +80,25 @@
         <p class="text-gray-400">No hay productos cargados aún.</p>
       {% endfor %}
     </div>
-  </div>
+</div>
+<!-- Floating Button (solo visible en mobile) -->
+  {% if admin %}
+  <button class="sm:hidden fixed bottom-6 right-6 bg-green-600 hover:bg-green-700 text-white rounded-full p-4 shadow-2xl text-2xl z-50 transition-transform hover:scale-110" onclick="abrirModalProducto()">
+    ➕
+  </button>
+  {% endif %}
 
   <!-- Modal imagen ampliada -->
-  <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 transition-opacity duration-300">
-    <div id="modal-content" class="relative max-w-3xl w-full scale-95 opacity-0 transition-all duration-300 ease-out">
-      <button type="button" onclick="cerrarModal()" class="absolute top-2 right-2 text-white bg-red-600 hover:bg-red-700 rounded-full px-3 py-1 font-bold z-10">
+<div class="hidden fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 transition-opacity duration-300" id="modal">
+<div class="relative max-w-3xl w-full scale-95 opacity-0 transition-all duration-300 ease-out" id="modal-content">
+<button class="absolute top-2 right-2 text-white bg-red-600 hover:bg-red-700 rounded-full px-3 py-1 font-bold z-10" onclick="cerrarModal()" type="button">
         ✖
       </button>
-      <img id="imagen-ampliada" src="" class="w-full max-h-screen object-contain rounded-lg shadow-lg">
-    </div>
-  </div>
-
-  <!-- Scripts -->
-  <script>
+<img class="w-full max-h-screen object-contain rounded-lg shadow-lg" id="imagen-ampliada" src=""/>
+</div>
+</div>
+<!-- Scripts -->
+<script>
     function ampliarImagen(url) {
       const modal = document.getElementById('modal');
       const modalContent = document.getElementById('modal-content');
@@ -123,6 +135,36 @@
       if (!modalContent.contains(event.target)) cerrarModal();
     });
   </script>
+<!-- Modal de carga de producto -->
+<div class="hidden fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center" id="modal-producto">
+<div class="bg-white dark:bg-gray-800 p-6 rounded-lg w-full max-w-lg relative">
+<button class="absolute top-2 right-2 text-white bg-red-600 hover:bg-red-700 rounded-full px-3 py-1 font-bold" onclick="cerrarModalProducto()">✖</button>
+<h2 class="text-xl font-bold mb-4 text-center">➕ Nuevo Producto</h2>
+<form action="/guardar_producto" class="space-y-4" enctype="multipart/form-data" method="POST">
+<input class="w-full p-2 rounded bg-gray-200 dark:bg-gray-700 text-black dark:text-white" name="descripcion" placeholder="Descripción" required="" type="text"/>
+<input class="w-full p-2 rounded bg-gray-200 dark:bg-gray-700 text-black dark:text-white" name="memoria" placeholder="Memoria (opcional)" type="text"/>
+<input class="w-full p-2 rounded bg-gray-200 dark:bg-gray-700 text-black dark:text-white" name="condicion_bateria" placeholder="Condición de batería (opcional)" type="text"/>
+<select class="w-full p-2 rounded bg-gray-200 dark:bg-gray-700 text-black dark:text-white" name="estado">
+<option value="Usado">Usado</option>
+<option value="Sellado">Sellado</option>
+</select>
+<input class="w-full p-2 rounded bg-gray-200 dark:bg-gray-700 text-black dark:text-white" name="precio" placeholder="Precio" required="" type="number"/>
+<input accept="image/*" class="w-full p-2 bg-white dark:bg-gray-800" name="foto" required="" type="file"/>
+<button class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" type="submit">
+        Guardar Producto
+      </button>
+</form>
+</div>
+</div>
+<script>
+  function abrirModalProducto() {
+    document.getElementById("modal-producto").classList.remove("hidden");
+  }
+  function cerrarModalProducto() {
+    document.getElementById("modal-producto").classList.add("hidden");
+  }
+</script>
 </body>
 </html>
+
 
